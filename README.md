@@ -1,119 +1,30 @@
-# mongo-cluster
+# MongoDB
 
-This document can help you to deploy mongodb replica set cluster with docker-compose.
+MongoDB is a popular, open-source NoSQL database management system designed to handle large volumes of unstructured or semi-structured data. Unlike traditional relational databases, which organize data in tables with rows and columns, MongoDB stores data in flexible, JSON-like documents called BSON (Binary JSON). This allows for a more flexible and scalable approach to data storage and retrieval.
 
-## A: First you need to prepare you infrastructure.
+## Key Features of MongoDB:
 
-1. Deploy 3 virtualmachine on your Hypervisor as a server.
+## 1.   Document-Oriented:
+        MongoDB uses a document-based model to store data. Each record is stored as a document, which can contain nested data structures like arrays and other documents.
+        This model is more flexible than the table-based relational model, allowing for varied data structures within the same collection.
 
-2. Install docker and docker compose on your servers.
+## 2.   Schema-less:
+        MongoDB is schema-less, meaning you don't need to define a rigid schema before storing data. Documents within the same collection can have different fields, making it easy to evolve your data model as your application changes.
 
-3. Add external disk as a lvm partition and XFS format to mount you database data for increasing database read and write speed.
+## 3.   Scalability:
+        MongoDB supports horizontal scaling through sharding, where data is distributed across multiple servers or clusters. This makes it suitable for handling large-scale applications with high data volume.
 
-## B: Create the docker-compose.yml with below parameters.
+## 4.   High Availability:
+        MongoDB ensures high availability through replica sets, where multiple copies of data are maintained across different servers. If one server goes down, another can take over, ensuring no data loss.
 
-```bash
-version: '3.9'
-services:
-  mongo1:
-    image: mongo:6.0
-    container_name: mongo1
-    restart: always
-    ports:
-      - 27017:27017
-    volumes:
-      - /data/mongodb:/data/db
-      - /opt/mongodb-keyfile:/opt/mongodb-keyfile:ro
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    command: mongod --replSet rs0 --bind_ip 0.0.0.0 --keyFile /opt/mongodb-keyfile --auth
-    networks:
-      - mongo-network
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
+## 5.  Rich Query Language:
+        MongoDB provides a powerful query language with support for filtering, sorting, aggregations, and indexing. It also supports full-text search and geospatial queries.
 
-networks:
-  mongo-network:
-    driver: bridge
-```
-You must put docker-compose file on your 3 servers.
-/data is the xfs format partition on external disk.
+## 6.   Indexing:
+        MongoDB allows you to create indexes on any field in a document, which can significantly improve the performance of search queries.
 
-## C. You need to create mongodb-keyfile on your server for authentication.
+## 7.   Aggregation Framework:
+        MongoDB has a powerful aggregation framework that allows you to perform data processing and transformation operations on the server side, similar to SQL's GROUP BY and JOIN operations.
 
-1. Generate the key with below command
-```bash
-openssl rand -base64 756 > mongodb-keyfile
-```
-2. Give the permission that file need.
-```bash
-chown 999:999 mongodb-keyfile
-```
-3. Put the file in /opt directory that have mount point in docker-compose.
-```bash
-mv mongodb-keyfile /opt
-```
-If you check the docker-compose yaml file you can see /opt/mongodb-keyfile.
-
-## D. change /etc/hosts for cominucate server together with name.
-
-For example in the first server you need to have below parameters in /etc/host.
-
-```bash
-192.168.0.1 mongodb1
-#Mongodb cluster 
-192.168.0.2 mongodb2
-192.168.0.3 mongodb3
-```
-On seconde server
-
-```bash
-192.168.0.2 mongodb2
-#Mongodb cluster 
-192.168.0.1 mongodb1
-192.168.0.3 mongodb3
-```
-On third server
-
-```bash
-192.168.0.3 mongodb3
-#Mongodb cluster 
-192.168.0.1 mongodb1
-192.168.0.2 mongodb2
-```
-
-
-## E. Deploy the docker-compose and initiate the cluster.
-
-```bash
-docker-compose -f docker-compose.yml up -d
-```
-docker-compose.yml is the name of my docker compose file, rename it with your docker-compose file
-
-```bash
-docker exec -it <your mongodb container> mongosh -u <mongo user> -p <mongo password> --authenticationDatabase admin
-```
-```bash
-rs.initiate(
-  {
-    _id: "rs0",
-    members: [
-      { _id: 0, host: "mongo1:27017" },
-      { _id: 1, host: "mongo2:27017" },
-      { _id: 2, host: "mongo3:27017" }
-    ]
-  }
-)
-```
-## F. Check the cluster status.
-
-```bash
-rs.status()
-```
-
-
+## 8.   Cross-Platform:
+        MongoDB is cross-platform and can run on various operating systems, including Linux, Windows, and macOS.
