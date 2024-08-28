@@ -41,8 +41,8 @@ networks:
   mongo-network:
     driver: bridge
 ```
-*** You must put docker-compose file on your 3 servers ***
-*** /data is the xfs format partition on external disk ***
+You must put docker-compose file on your 3 servers
+/data is the xfs format partition on external disk
 
 ## C. You need to create mongodb-keyfile on your server for authentication.
 
@@ -65,7 +65,7 @@ If you check the docker-compose yaml file you can see /opt/mongodb-keyfile.
 ```bash
 docker-compose -f docker-compose.yml up -d
 ```
-*** docker-compose.yml is the name of my docker compose file, rename it with your docker-compose file ***
+docker-compose.yml is the name of my docker compose file, rename it with your docker-compose file
 
 ```bash
 docker exec -it <your mongodb container> mongosh -u <mongo user> -p <mongo password> --authenticationDatabase admin
