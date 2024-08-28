@@ -41,8 +41,8 @@ networks:
   mongo-network:
     driver: bridge
 ```
-You must put docker-compose file on your 3 servers
-/data is the xfs format partition on external disk
+You must put docker-compose file on your 3 servers.
+/data is the xfs format partition on external disk.
 
 ## C. You need to create mongodb-keyfile on your server for authentication.
 
