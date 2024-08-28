@@ -60,7 +60,35 @@ mv mongodb-keyfile /opt
 ```
 If you check the docker-compose yaml file you can see /opt/mongodb-keyfile.
 
-## D. Deploy the docker-compose and initiate the cluster.
+## D. change /etc/hosts for cominucate server together with name.
+
+For example in the first server you need to have below parameters in /etc/host.
+
+```bash
+192.168.0.1 mongodb1
+#Mongodb cluster 
+192.168.0.2 mongodb2
+192.168.0.3 mongodb3
+```
+On seconde server
+
+```bash
+192.168.0.2 mongodb2
+#Mongodb cluster 
+192.168.0.1 mongodb1
+192.168.0.3 mongodb3
+```
+On third server
+
+```bash
+192.168.0.3 mongodb3
+#Mongodb cluster 
+192.168.0.1 mongodb1
+192.168.0.2 mongodb2
+```
+
+
+## E. Deploy the docker-compose and initiate the cluster.
 
 ```bash
 docker-compose -f docker-compose.yml up -d
@@ -82,7 +110,7 @@ rs.initiate(
   }
 )
 ```
-## E. Check the cluster status.
+## F. Check the cluster status.
 
 ```bash
 rs.status()
