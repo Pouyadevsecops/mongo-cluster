@@ -111,7 +111,7 @@ Then use below command to initate the cluster.
  ```bash
  rs.initiate(
     {
-      _id: "rs0",
+      _id: "<your cluster name>",
       version: 1,
       members: [
          { _id: 0, host: "mongodb1:27017" },
