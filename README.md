@@ -74,7 +74,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongo1_data:/data/db
+      - /data/mongodb:/data/db
       - /opt/mongodb-keyfile:/opt/mongodb-keyfile:ro
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
