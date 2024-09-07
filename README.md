@@ -48,7 +48,7 @@ For deploying mongo cluser with docker-compose, first you need to have 3 servers
 XFS partiton is the bestpractice format partition for all databases.
 
 
-## 1. Generate rsa key for cluster authentication.
+## A. Generate rsa key for cluster authentication.
 
  After deploy your infrastructure,you need to generate key for authentication between your databases:
 
@@ -63,7 +63,7 @@ XFS partiton is the bestpractice format partition for all databases.
  ```
  /opt is directory that i selected for my keyfile and I volumed in my docker-compose file.
 
-## 2. Create docker-compose.yml file.
+## B. Create docker-compose.yml file.
 
  ```bash
  version: '3.9'
@@ -89,7 +89,7 @@ XFS partiton is the bestpractice format partition for all databases.
  ```
  Use this compose on your 3 server.
 
-## 3. All of database servers must have conncetion to eachother:
+## C. All of database servers must have conncetion to eachother:
 
   Config /etc/hosts:
   ```bash
@@ -100,7 +100,7 @@ XFS partiton is the bestpractice format partition for all databases.
   ```
   You must have server ips in /etc/hosts to communicate with eachother.
   
-## 4. Initate the cluster:
+## D. Initate the cluster:
 
 First login into the database cli.
  ```bash
@@ -122,7 +122,7 @@ Then use below command to initate the cluster.
  )
  ```
 
-## 5. Check the cluster status:
+## E. Check the cluster status:
 
  You can check the cluster throw the database:
 
