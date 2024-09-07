@@ -55,7 +55,8 @@ XFS partiton is the bestpractice format partition for all databases.
  ```bash
  openssl rand -base64 756 > mongodb-keyfile
  ```
- then you must set a volume for your key on your docker-compose file and set 999 permission on mongodb-keyfile and share  it on your 3 server.
+ You can generatethe key in one server and copied in other servers. 
+ You must set a volume for your key on your docker-compose file and set 999 permission on mongodb-keyfile and share  it on your 3 server.
 
  ```bash
  sudo chown 999:999 /opt/mongodb-keyfile 
@@ -88,7 +89,18 @@ XFS partiton is the bestpractice format partition for all databases.
  ```
  Use this compose on your 3 server.
 
-## 3. Initate the cluster:
+## 3. All of database servers must have conncetion to eachother:
+
+  Config /etc/hosts:
+  ```bash
+  192.168.1.0 mongodb1
+  #Mongodb cluster
+  192.168.1.2 mongodb2
+  192.168.1.3 mongodb3
+  ```
+  You must have server ips in etc hosts to communicate with eachohter.
+  
+## 4. Initate the cluster:
 
  ```bash
  rs.initiate(
