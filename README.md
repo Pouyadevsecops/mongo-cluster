@@ -102,6 +102,12 @@ XFS partiton is the bestpractice format partition for all databases.
   
 ## 4. Initate the cluster:
 
+First login into the database cli.
+ ```bash
+ docker exec -it mongo1 mongo -u root -p example --authenticationDatabase admin
+ ```
+Then use below command to initate the cluster.
+
  ```bash
  rs.initiate(
     {
@@ -115,5 +121,15 @@ XFS partiton is the bestpractice format partition for all databases.
     }
  )
  ```
+
+## 5. Check the cluster status:
+
+ You can check the cluster throw the database:
+
+ ```bash
+ rs.status()
+ ```
+
+If you see no problems,Congratulations! Your Mongodb replica set cluster deploid successfully.
 
  
