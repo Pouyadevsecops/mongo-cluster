@@ -82,7 +82,7 @@ XFS partiton is the bestpractice format partition for all databases.
       MONGO_INITDB_ROOT_PASSWORD: example
     command: mongod --replSet <your cluster name> --bind_ip 0.0.0.0 --keyFile /opt/mongodb-keyfile --auth
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet 1
+      test: echo 'db.runCommand("ping").ok' | mongo mongo1:27017/test --quiet 1
       interval: 10s
       timeout: 10s
       retries: 5
@@ -98,7 +98,7 @@ XFS partiton is the bestpractice format partition for all databases.
   192.168.1.2 mongodb2
   192.168.1.3 mongodb3
   ```
-  You must have server ips in etc hosts to communicate with eachohter.
+  You must have server ips in /etc/hosts to communicate with eachother.
   
 ## 4. Initate the cluster:
 
