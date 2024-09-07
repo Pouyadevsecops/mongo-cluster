@@ -55,5 +55,9 @@ XFS partiton is the bestpractice format partition for all databases.
  ```bash
  openssl rand -base64 756 > mongodb-keyfile
  ```
+ then you must set a volume for your key on your docker-compose file and set 999 permission on mongodb-keyfile and share  it on your 3 server.
 
-
+ ```bash
+ sudo chown 999:999 /opt/mongodb-keyfile 
+ ```
+ /opt is directory that i selected for my keyfile and I volumed in my docker-compose file.
