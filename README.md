@@ -61,3 +61,29 @@ XFS partiton is the bestpractice format partition for all databases.
  sudo chown 999:999 /opt/mongodb-keyfile 
  ```
  /opt is directory that i selected for my keyfile and I volumed in my docker-compose file.
+
+ ## 2. Create docker-compose.yml file.
+
+ ```bash
+ version: '3.9'
+services:
+  mongo1:
+    image: mongo:6.0
+    container_name: mongo1
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo1_data:/data/db
+      - /opt/mongodb-keyfile:/opt/mongodb-keyfile:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    command: mongod --replSet rs0 --bind_ip 0.0.0.0 --keyFile /opt/mongodb-keyfile --auth
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+ ```
