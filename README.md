@@ -70,7 +70,7 @@ XFS partiton is the bestpractice format partition for all databases.
  services:
   mongo1:
     image: mongo:6.0
-    container_name: mongo1
+    container_name: mongox ------> x = is the number of your server {in first server is 1}
     restart: always
     ports:
       - 27017:27017
@@ -81,14 +81,21 @@ XFS partiton is the bestpractice format partition for all databases.
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     command: mongod --replSet <your cluster name> --bind_ip 0.0.0.0 --keyFile /opt/mongodb-keyfile --auth
+    networks:
+      - mongo-network
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo1:27017/test --quiet 1
-      interval: 10s
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
       timeout: 10s
       retries: 5
+      start_period: 10s
+
+ networks:
+  mongo-network:
+    driver: bridge
  ```
  Use this compose on your 3 server.
-
+ 
 ## C. All of database servers must have conncetion to eachother:
 
   Config /etc/hosts:
@@ -130,6 +137,6 @@ Then use below command to initate the cluster.
  rs.status()
  ```
 
-If you see no problems,Congratulations! Your Mongodb replica set cluster deploid successfully.
+If you see no problems,Congratulations! Your Mongodb replica set cluster deploied successfully.
 
  
